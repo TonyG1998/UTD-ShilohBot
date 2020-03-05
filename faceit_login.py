@@ -17,7 +17,7 @@ db_path = r"D:\Daily Shit\Programming\UTD Bot\users.db"
 options = webdriver.ChromeOptions()
 options.add_argument('user-data-dir=C:\\Users\\Tony\\AppData\\Local\\Google\\Chrome\\User Data\\Profile 1')
 options.add_argument('profile-directory=Profile 1')
-browser = webdriver.Chrome(executable_path=r"D:\\Daily Shit\\Programming\\UTD Bot\\chromedriver.exe", chrome_options=options)
+browser = webdriver.Chrome(executable_path="./resources/chromedriver.exe", chrome_options=options)
 
 
 def faceit_login():
@@ -60,10 +60,10 @@ def sel_login():
 
 def queue_data():
 	print("The number of people queuing is:")
-	print(browser.find_element_by_xpath('/html/body/div[2]/div[3]/div/div/div/div/div/div/fi-navbar/div/div[2]/fi-navbar-actions/queuing-counter/div/div[6]/span').text)
+	#print(browser.find_element_by_xpath('/html/body/div[2]/div[3]/div/div/div/div/div/div/fi-navbar/div/div[2]/fi-navbar-actions/queuing-counter/div/div[6]/span').text)
 
-	num_in_q = int(browser.find_element_by_xpath('/html/body/div[2]/div[3]/div/div/div/div/div/div/fi-navbar/div/div[2]/fi-navbar-actions/queuing-counter/div/div[6]/span').text)
-
+	#num_in_q = int(browser.find_element_by_xpath('/html/body/div[2]/div[3]/div/div/div/div/div/div/fi-navbar/div/div[2]/fi-navbar-actions/queuing-counter/div/div[6]/span').text)
+	num_in_q = int(browser.find_element_by_css_selector('span[ng-bind="vm.totalCount | thousandSuffix"]').text)
 	return num_in_q
 #Returns a list of the members in the queue
 def members_in_queue():

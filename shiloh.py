@@ -4,11 +4,11 @@ import random
 import faceit_login
 import api
 import sql_test as sql
-from dotenv import load_dotenv
+from dotenv import load_dotenv, find_dotenv
 from discord.ext import commands, tasks
 import asyncio
 
-load_dotenv()
+load_dotenv(dotenv_path=r'./resources/.env')
 TOKEN = os.getenv('DISCORD_TOKEN')
 GUILD = os.getenv('DISCORD_GUILD')
 db_path = r"D:\Daily Shit\Programming\UTD Bot\users.db"
