@@ -1,0 +1,4 @@
+__pycache__
+resources/chromedriver.exe
+resources/.env
+debug.log

@@ -11,6 +11,7 @@ import asyncio
 load_dotenv()
 TOKEN = os.getenv('DISCORD_TOKEN')
 GUILD = os.getenv('DISCORD_GUILD')
+db_path = r"D:\Daily Shit\Programming\UTD Bot\users.db"
 
 
 client = discord.Client()
@@ -114,15 +115,15 @@ async def woof(ctx):
 async def link_user(ctx, arg):
 	#links the users account to a faceit profile, and enters it into the database
 	faceit_name = arg
-	discord_name = str(ctx.message.author)
+	discord_id = str(ctx.message.author.id)
 
-	print(discord_name)
-	print(type(discord_name))
+	print(discord_id)
+	print(type(discord_id))
 	print(faceit_name)
 	print(type(faceit_name))
 	#create user tuple that follows how data is inserted
-	user = (discord_name, faceit_name)
-	db_path = r"D:\Daily Shit\Programming\UTD Bot\users.db"
+	user = (discord_id, faceit_name)
+	
 
 	#link the database
 	conn = sql.create_connection(db_path)
@@ -130,6 +131,29 @@ async def link_user(ctx, arg):
 		sql.create_user(conn, user)
 
 	await ctx.send("You have linked your discord profile with the \"" + faceit_name + "\" faceit profile")
+
+
+
+async def move_teams():
+	#returns a python dict of match data, contains keys (team1, team2, map, team1_roster, team2_roster)
+	data = api.ongoing_match_data()
+
+	if data != 0:
+		teamA = data['team1_roster']
+		teamB = data['team2_roster']
+
+		faceit_login.place_teams(teamA, teamB)
+
+
+
+
+
+
+
+
+
+
+
 
 
 

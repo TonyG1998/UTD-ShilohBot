@@ -9,8 +9,9 @@ from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
 import time
 import random
+import sql_test as sql
 
-
+db_path = r"D:\Daily Shit\Programming\UTD Bot\users.db"
 
 
 options = webdriver.ChromeOptions()
@@ -114,6 +115,17 @@ def shiloh_pic():
 	]
 
 	return random.choice(photos)
+#Team A and team B provice a list of faceit names
+def place_teams(teamA, teamB):
+	conn = sql.create_connection(db_path)
+	cur = conn.cursor()
+#TODO, place players in correct voice channel
+	for player in teamA:
+		#returns discord ID matched with faceit account
+		discord_username = sql.get_discord(conn, player)
+		
+
+
 
 
 	

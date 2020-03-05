@@ -28,5 +28,19 @@ def delete_all_tasks(conn):
 	cur.execute(sql)
 	conn.commit()
 
+def get_discord(conn, faceit):
+	cur = conn.cursor()
+	cur.execute("SELECT * FROM users WHERE faceit=?", (faceit,))
+	result = cur.fetchone()
+
+	return result[0]
+	
+
+
+
+
+
+
+
 
 
