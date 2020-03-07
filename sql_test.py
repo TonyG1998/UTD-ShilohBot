@@ -27,7 +27,7 @@ def delete_all_tasks(conn):
 	cur = conn.cursor()
 	cur.execute(sql)
 	conn.commit()
-
+#returns the discord id from the faceit username
 def get_discord(conn, faceit):
 	cur = conn.cursor()
 	cur.execute("SELECT * FROM users WHERE faceit=?", (faceit,))

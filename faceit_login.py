@@ -10,14 +10,15 @@ from selenium.webdriver.support import expected_conditions as EC
 import time
 import random
 import sql_test as sql
+import os.path
 
-db_path = r"D:\Daily Shit\Programming\UTD Bot\users.db"
+
 
 
 options = webdriver.ChromeOptions()
 options.add_argument('user-data-dir=C:\\Users\\Tony\\AppData\\Local\\Google\\Chrome\\User Data\\Profile 1')
 options.add_argument('profile-directory=Profile 1')
-browser = webdriver.Chrome(executable_path="./resources/chromedriver.exe", chrome_options=options)
+browser = webdriver.Chrome(executable_path="./resources/chromedriver", chrome_options=options)
 
 
 def faceit_login():
@@ -116,13 +117,29 @@ def shiloh_pic():
 
 	return random.choice(photos)
 #Team A and team B provice a list of faceit names
-def place_teams(teamA, teamB):
-	conn = sql.create_connection(db_path)
-	cur = conn.cursor()
-#TODO, place players in correct voice channel
+async def place_teams(teamA, teamB, guild):
+
+	conn = sql.create_connection("resources/users.db")
+	A_ID = 510628099554279424
+	B_ID = 510628116541079552
+	channel_a = guild.get_channel(A_ID)
+	channel_b = guild.get_channel(B_ID)
+
+
+
+
 	for player in teamA:
 		#returns discord ID matched with faceit account
-		discord_username = sql.get_discord(conn, player)
+		discord_ID = int(sql.get_discord(conn, player))
+
+		#move the user to voice channel A
+		await guild.get_member(discord_ID).move_to(channel_a)
+
+	for player in teamB:
+		discord_ID = int(sql.get_discord(conn, player))
+
+		await guild.get_member(discord_ID).move_to(channel_b)
+
 		
 
 

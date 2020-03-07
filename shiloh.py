@@ -11,7 +11,7 @@ import asyncio
 load_dotenv(dotenv_path=r'./resources/.env')
 TOKEN = os.getenv('DISCORD_TOKEN')
 GUILD = os.getenv('DISCORD_GUILD')
-db_path = r"D:\Daily Shit\Programming\UTD Bot\users.db"
+
 
 
 client = discord.Client()
@@ -20,8 +20,10 @@ client = discord.Client()
 bot = commands.Bot(command_prefix='!')
 bot.remove_command('help')
 
+
 @tasks.loop(seconds=5.0)
 async def test_print():
+	#TODO moveteams function implemented into loop, check for ongoing matches and move
 	print('hello?')
 
 @test_print.after_loop
@@ -44,6 +46,7 @@ async def queue_response(ctx):
 
 @bot.command(name='queue', help = 'Displays members in the queue')
 async def who_response(ctx):
+	#TODO fix queue response on mac
 	#returns a list of dicts with keys "name" and "skill"
 	response = faceit_login.members_in_queue()
 	num_in_queue = str(len(response))
@@ -126,11 +129,21 @@ async def link_user(ctx, arg):
 	
 
 	#link the database
-	conn = sql.create_connection(db_path)
+	conn = sql.create_connection("resources/users.db")
 	with conn:
 		sql.create_user(conn, user)
 
 	await ctx.send("You have linked your discord profile with the \"" + faceit_name + "\" faceit profile")
+
+@bot.command(name='move-test')
+async def movetest(ctx):
+	await bot.wait_until_ready()
+	UTD_GUILD = bot.get_guild(363147231974522881)
+	teamA = ['asauce']
+	teamB = ['yakuza']
+
+
+	await faceit_login.place_teams(teamA, teamB, UTD_GUILD)
 
 
 
@@ -138,11 +151,12 @@ async def move_teams():
 	#returns a python dict of match data, contains keys (team1, team2, map, team1_roster, team2_roster)
 	data = api.ongoing_match_data()
 
+	UTD_GUILD = bot.get_guild(363147231974522881)
 	if data != 0:
 		teamA = data['team1_roster']
 		teamB = data['team2_roster']
 
-		faceit_login.place_teams(teamA, teamB)
+		await faceit_login.place_teams(teamA, teamB, UTD_GUILD)
 
 
 
@@ -162,5 +176,5 @@ async def move_teams():
 
 
 
-test_print.start()
+
 bot.run(TOKEN)
