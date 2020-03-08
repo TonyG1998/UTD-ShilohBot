@@ -72,14 +72,14 @@ def members_in_queue():
 	member_list = []
 
 	#Simulates a mouse hover over the queue number to retrieve the list of players
-	counter = browser.find_element_by_xpath('/html/body/div[2]/div[3]/div/div/div/div/div/div/fi-navbar/div/div[2]/fi-navbar-actions/queuing-counter/div/div[6]/span')
+	counter = browser.find_element_by_class_name('icon-queue-circle')
 	builder.move_to_element(counter).perform()
 	#Seperates the members in a list of elements that contains the skill level and the name
 	try:
-		wait = WebDriverWait(browser, 2).until(EC.presence_of_element_located((By.XPATH, '/html/body/div[8]/div[2]/div/div/div/ng-transclude/ul')))
+		wait = WebDriverWait(browser, 2).until(EC.presence_of_element_located((By.CLASS_NAME, 'users-list')))
 	except:
 		return member_list
-	data = browser.find_element_by_xpath('/html/body/div[8]/div[2]/div/div/div/ng-transclude/ul')
+	data = browser.find_element_by_class_name('users-list')
 	members = data.find_elements_by_tag_name('li')
 
 	

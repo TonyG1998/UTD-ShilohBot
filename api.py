@@ -4,11 +4,11 @@ import json
 import os
 from dotenv import load_dotenv
 
-load_dotenv()
+load_dotenv(dotenv_path=r'./resources/.env')
 AUTH = os.getenv('API_AUTH')
 
 
-headers = {'authorization' : AUTH}
+headers = {'authorization': AUTH}
 #converts the request into python object
 def load_json(request):
 	j = json.dumps(request.json(), sort_keys=True, indent=4)

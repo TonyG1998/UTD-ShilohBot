@@ -46,7 +46,6 @@ async def queue_response(ctx):
 
 @bot.command(name='queue', help = 'Displays members in the queue')
 async def who_response(ctx):
-	#TODO fix queue response on mac
 	#returns a list of dicts with keys "name" and "skill"
 	response = faceit_login.members_in_queue()
 	num_in_queue = str(len(response))
