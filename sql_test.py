@@ -33,7 +33,11 @@ def get_discord(conn, faceit):
 	cur.execute("SELECT * FROM users WHERE faceit=?", (faceit,))
 	result = cur.fetchone()
 
-	return result[0]
+
+	if(result != None):
+		return result[0]
+
+	return None
 	
 
 

@@ -130,15 +130,27 @@ async def place_teams(teamA, teamB, guild):
 
 	for player in teamA:
 		#returns discord ID matched with faceit account
-		discord_ID = int(sql.get_discord(conn, player))
+		retrieve = sql.get_discord(conn, player)
+		if(retrieve == None):
+			print(player + " not registered")
+		else:
+			discord_ID = int(retrieve)
+			print(player + " moved")
+			#move the user to voice channel A
+			await guild.get_member(discord_ID).move_to(channel_a)
 
-		#move the user to voice channel A
-		await guild.get_member(discord_ID).move_to(channel_a)
+		
+		
 
 	for player in teamB:
-		discord_ID = int(sql.get_discord(conn, player))
-
-		await guild.get_member(discord_ID).move_to(channel_b)
+		retrieve = sql.get_discord(conn, player)
+		if(retrieve == None):
+			print(player + "not registered")
+		else:
+			discord_ID = int(retrieve)
+			#move the user to voice channel A
+			await guild.get_member(discord_ID).move_to(channel_b)
+		
 
 		
 

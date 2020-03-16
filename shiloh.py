@@ -138,8 +138,10 @@ async def link_user(ctx, arg):
 async def movetest(ctx):
 	await bot.wait_until_ready()
 	UTD_GUILD = bot.get_guild(363147231974522881)
-	teamA = ['asauce']
-	teamB = ['yakuza']
+	data = api.ongoing_match_data()
+	if data != 0:
+		teamA = data['team1_roster']
+		teamB = data['team2_roster']
 
 
 	await faceit_login.place_teams(teamA, teamB, UTD_GUILD)
